@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Everrise Salesforce Pov",
+  "schemaVersion": 1,
+  "description": "EverRise Lift Group × Salesforce POV page. Answers the CEO's \"what do you mean?\" about harnessing their data lake, with FIELDBOSS explicitly preserved as system of record. Addressed to Chris Smith, built to be forwarded to an unnamed technical reviewer. All EverRise facts from their own site or H.I.G.'s 14 Sept release; no pricing, no invented metrics."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>EverRise Lift Group × Salesforce | Harnessing the data — the specific version</title>
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#0F1419; --ink-2:#39424B; --ink-3:#6B7684;
+    --line:#E3E7EB; --line-2:#CFD6DD;
+    --paper:#FFFFFF; --paper-2:#F7F9FA; --paper-3:#EEF2F5;
+    --sf:#0176D3; --sf-dark:#032D60; --sf-light:#E8F4FE;
+    --slate:#1B2733;
+    --amber:#8A5A00; --amber-bg:#FFF6E5; --amber-line:#F0D9A8;
+    --green:#186146; --green-bg:#E7F4EE;
+    --maxw:1080px; --gap:clamp(64px,9vw,120px);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .narrow{max-width:780px}
+
+  h1,h2,h3,h4{margin:0; line-height:1.08; letter-spacing:-.021em; font-weight:660}
+  h1{font-size:clamp(2rem,5vw,3.4rem)}
+  h2{font-size:clamp(1.55rem,3.4vw,2.35rem)}
+  h3{font-size:clamp(1.1rem,1.85vw,1.35rem); line-height:1.24}
+  h4{font-size:1.01rem; line-height:1.3; letter-spacing:-.012em}
+  p{margin:0 0 1.05em}
+  a{color:var(--sf)}
+  strong{font-weight:640; color:var(--ink)}
+
+  .eyebrow{font-size:.7rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--sf); margin:0 0 14px}
+  .eyebrow.on-dark{color:#7CC4F5}
+  .eyebrow.muted{color:var(--ink-3)}
+
+  nav{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.93);
+    backdrop-filter:saturate(180%) blur(12px); border-bottom:1px solid var(--line)}
+  .nav-in{max-width:var(--maxw); margin:0 auto; padding:0 24px; height:58px; display:flex; align-items:center; gap:22px}
+  .lock{display:flex; align-items:center; gap:10px; font-size:.82rem; font-weight:680; letter-spacing:-.01em; white-space:nowrap}
+  .lock .x{color:var(--ink-3); font-weight:400}
+  .nav-links{margin-left:auto; display:flex; gap:20px}
+  .nav-links a{font-size:.83rem; color:var(--ink-2); text-decoration:none; font-weight:520}
+  .nav-links a:hover{color:var(--sf)}
+  .nav-toggle{margin-left:auto; display:none; background:none; border:1px solid var(--line-2); border-radius:7px; padding:7px 11px; font-size:.8rem; color:var(--ink-2); cursor:pointer}
+  @media(max-width:880px){
+    .nav-links{display:none; position:absolute; top:58px; left:0; right:0; background:var(--paper);
+      border-bottom:1px solid var(--line); flex-direction:column; gap:0; padding:8px 24px 16px}
+    .nav-links.open{display:flex}
+    .nav-links a{padding:11px 0; border-bottom:1px solid var(--line); font-size:.95rem}
+    .nav-toggle{display:block}
+  }
+
+  .hero{background:var(--slate); color:#fff; padding:clamp(56px,8vw,92px) 0 0}
+  .hero h1{color:#fff; max-width:21ch}
+  .hero h1 .hl{color:#6FC3FF}
+  .hero .sub{font-size:clamp(1.02rem,1.6vw,1.18rem); color:#C3CDD8; max-width:64ch; margin-top:22px}
+  .conf{display:inline-flex; align-items:center; gap:9px; font-size:.7rem; letter-spacing:.1em;
+    text-transform:uppercase; font-weight:650; color:#8FA3B8; border:1px solid #33414F;
+    padding:6px 12px; border-radius:999px; margin-bottom:26px}
+  .meta{margin-top:34px; padding-top:22px; border-top:1px solid #2C3846;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px 28px}
+  .meta div{font-size:.86rem; color:#AFBDCB; line-height:1.5}
+  .meta span{display:block; font-size:.68rem; letter-spacing:.11em; text-transform:uppercase; color:#6E8296; font-weight:650; margin-bottom:5px}
+  .meta b{color:#fff; font-weight:600}
+
+  .stats{margin-top:clamp(40px,6vw,60px); display:grid; gap:1px; background:#2C3846;
+    border-top:1px solid #2C3846; grid-template-columns:repeat(4,1fr)}
+  @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--slate); padding:26px 20px 30px}
+  .stat b{display:block; font-size:clamp(2rem,4.2vw,2.8rem); font-weight:660; letter-spacing:-.03em; color:#fff; line-height:1}
+  .stat p{margin:9px 0 0; font-size:.83rem; color:#AFBDCB; line-height:1.42}
+  .stat .src{display:block; margin-top:8px; font-size:.68rem; color:#6E8296}
+
+  section{padding:var(--gap) 0}
+  .alt{background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .dark{background:var(--sf-dark); color:#fff}
+  .dark h2,.dark h3,.dark h4{color:#fff}
+  .dark p{color:#C8DCF0}
+  .lede{font-size:clamp(1.03rem,1.6vw,1.16rem); color:var(--ink-2); max-width:65ch}
+  .dark .lede{color:#BDD5EC}
+  h2+.lede{margin-top:20px}
+
+  .grid{display:grid; gap:18px; margin-top:44px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+
+  .card{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:26px 24px}
+  .alt .card{background:#fff}
+  .card h3{margin-bottom:11px}
+  .card p{font-size:.94rem; color:var(--ink-2); margin-bottom:0}
+  .card p+p{margin-top:.8em}
+  .card .nm{font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--sf); display:block; margin-bottom:9px}
+  .card .at{display:block; margin-top:15px; padding-top:14px; border-top:1px solid var(--line);
+    font-size:.9rem; color:var(--ink-2)}
+  .card .at b{font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:6px}
+  .tag{display:inline-block; font-size:.66rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; padding:4px 9px; border-radius:5px; margin-bottom:13px}
+  .tag.ver{background:var(--green-bg); color:var(--green)}
+  .src{font-size:.75rem; color:var(--ink-3); line-height:1.45}
+  .card>.src{margin-top:16px; padding-top:13px; border-top:1px solid var(--line)}
+
+  .callout{border-left:3px solid var(--sf); background:var(--sf-light);
+    padding:24px 26px; border-radius:0 10px 10px 0; margin:38px 0 0}
+  .callout.warn{border-left-color:var(--amber); background:var(--amber-bg)}
+  .callout.plain{border-left-color:var(--line-2); background:var(--paper-2)}
+  .callout.onDark{background:rgba(255,255,255,.07); border-left-color:#6FC3FF}
+  .callout.onDark p{color:#D4E6F7}
+  .callout p:last-child{margin-bottom:0}
+  .callout h4{margin-bottom:10px}
+  .callout p{font-size:.95rem; color:var(--ink-2)}
+
+  .bigstate{border:2px solid var(--sf); border-radius:14px; padding:clamp(26px,4vw,38px); background:var(--sf-light); margin-top:8px}
+  .bigstate h3{margin-bottom:12px; font-size:clamp(1.2rem,2.2vw,1.55rem)}
+  .bigstate p{font-size:1rem; color:var(--ink-2)}
+  .bigstate p:last-child{margin-bottom:0}
+
+  .ladder{margin-top:44px; display:grid; gap:14px}
+  .rung{display:grid; grid-template-columns:46px 1fr; gap:20px; align-items:start;
+    border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:22px 24px; background:rgba(255,255,255,.045)}
+  .rung .n{width:46px; height:46px; border-radius:50%; display:grid; place-items:center;
+    font-weight:680; font-size:.95rem; background:rgba(255,255,255,.1); color:#9FD4FA; border:1px solid rgba(255,255,255,.2)}
+  .rung.have{border-color:rgba(140,220,180,.35); background:rgba(140,220,180,.07)}
+  .rung.have .n{background:rgba(140,220,180,.2); color:#A7E3C5; border-color:rgba(140,220,180,.45)}
+  .rung.now{background:rgba(111,195,255,.1); border-color:rgba(111,195,255,.42)}
+  .rung.now .n{background:#6FC3FF; color:var(--sf-dark); border-color:#6FC3FF}
+  .rung h4{margin-bottom:8px}
+  .rung p{font-size:.93rem; margin-bottom:0}
+  .rung p+p{margin-top:.75em}
+  .rung .lbl{font-size:.67rem; letter-spacing:.11em; text-transform:uppercase; font-weight:680; color:#7CA9D6; display:block; margin-bottom:7px}
+  .rung.have .lbl{color:#8FCFAE}
+  @media(max-width:640px){.rung{grid-template-columns:1fr; gap:14px}}
+
+  .roster{margin-top:40px; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#fff}
+  .rrow{display:grid; grid-template-columns:1.5fr .6fr 1fr; gap:16px; padding:15px 22px;
+    border-bottom:1px solid var(--line); align-items:center; font-size:.92rem}
+  .rrow:last-child{border-bottom:0}
+  .rrow.head{background:var(--paper-3); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--ink-3)}
+  .rrow b{font-weight:620}
+  .rrow .yr{color:var(--ink-3); font-variant-numeric:tabular-nums}
+  .pill{display:inline-block; font-size:.72rem; font-weight:620; padding:3px 9px; border-radius:20px; white-space:nowrap}
+  .pill.own{background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-line)}
+  .pill.fold{background:var(--paper-3); color:var(--ink-3); border:1px solid var(--line-2)}
+  @media(max-width:700px){
+    .rrow{grid-template-columns:1fr auto; gap:6px 12px; padding:14px 16px}
+    .rrow.head{display:none}
+    .rrow .yr{grid-column:1; font-size:.8rem}
+    .rrow .st{grid-column:2; grid-row:1/3; align-self:center}
+  }
+
+  .leaders{display:flex; flex-wrap:wrap; gap:9px; margin-top:28px}
+  .leader{font-size:.83rem; padding:8px 13px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink-2)}
+  .leader b{color:var(--ink); font-weight:620}
+  .leader.hi{border-color:var(--sf); background:var(--sf-light); color:var(--sf-dark)}
+  .leader.hi b{color:var(--sf-dark)}
+  .absence{margin-top:24px; border:1px dashed var(--line-2); border-radius:10px; padding:22px 24px; background:var(--paper-2)}
+  .absence b{font-size:1.45rem; letter-spacing:-.02em; display:block; margin-bottom:6px}
+
+  .ruleout{margin-top:38px; border:1px solid var(--line); border-radius:12px; background:#fff; overflow:hidden}
+  .ro{display:grid; grid-template-columns:34px 1fr; gap:16px; padding:19px 24px; border-bottom:1px solid var(--line)}
+  .ro:last-child{border-bottom:0}
+  .ro .mk{font-size:1.05rem; line-height:1.35; color:var(--ink-3)}
+  .ro h4{margin-bottom:6px}
+  .ro p{font-size:.92rem; color:var(--ink-2); margin-bottom:0}
+
+  .revbanner{border:1px solid var(--sf); background:var(--sf-light); border-radius:12px;
+    padding:22px 26px; margin-bottom:38px}
+  .revbanner p{margin:0; font-size:.95rem; color:var(--sf-dark)}
+  .revbanner b{font-weight:680}
+
+  details.q{border:1px solid var(--line); border-radius:11px; background:#fff; margin-bottom:12px; overflow:hidden}
+  details.q summary{padding:19px 52px 19px 24px; cursor:pointer; font-weight:620; font-size:1rem;
+    letter-spacing:-.012em; list-style:none; position:relative}
+  details.q summary::-webkit-details-marker{display:none}
+  details.q summary:hover{background:var(--paper-2)}
+  details.q summary:focus-visible{outline:2px solid var(--sf); outline-offset:-2px}
+  details.q summary::after{content:""; position:absolute; right:24px; top:50%; width:9px; height:9px;
+    border-right:2px solid var(--ink-3); border-bottom:2px solid var(--ink-3);
+    transform:translateY(-70%) rotate(45deg); transition:transform .22s ease}
+  @media (prefers-reduced-motion:reduce){details.q summary::after{transition:none}}
+  details.q[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+  details.q .body{padding:18px 24px 22px; border-top:1px solid var(--line)}
+  details.q .body p{font-size:.94rem; color:var(--ink-2)}
+  details.q .body p:last-child{margin-bottom:0}
+  details.q .why{font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--amber); display:block; margin-bottom:8px}
+
+  .cta{background:var(--slate); color:#fff; padding:var(--gap) 0}
+  .cta h2{color:#fff; max-width:24ch}
+  .cta p{color:#C3CDD8}
+  .btns{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+  .btn{display:inline-block; padding:14px 26px; border-radius:9px; font-weight:620;
+    font-size:.95rem; text-decoration:none; transition:background .18s ease,border-color .18s ease}
+  @media (prefers-reduced-motion:reduce){.btn{transition:none}}
+  .btn.p{background:var(--sf); color:#fff}
+  .btn.p:hover{background:#0B62AC}
+  .btn.s{border:1px solid #47566A; color:#fff}
+  .btn.s:hover{border-color:#8FA3B8}
+  .sig{margin-top:42px; padding-top:26px; border-top:1px solid #2C3846; font-size:.9rem; color:#AFBDCB}
+  .sig b{color:#fff; display:block; font-weight:620; font-size:1rem; margin-bottom:3px}
+
+  .sources{background:var(--paper-3); border-top:1px solid var(--line); padding:56px 0}
+  .sources h4{margin-bottom:18px; font-size:.7rem; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3)}
+  .sources ol{margin:0; padding-left:20px; columns:2; column-gap:40px}
+  @media(max-width:760px){.sources ol{columns:1}}
+  .sources li{font-size:.83rem; color:var(--ink-2); margin-bottom:10px; line-height:1.5; break-inside:avoid}
+  .sources a{word-break:break-word}
+  footer{background:var(--paper-3); padding:0 0 56px}
+  .foot{border-top:1px solid var(--line-2); padding-top:24px; font-size:.78rem; color:var(--ink-3); line-height:1.6}
+
+  .rv{opacity:0; transform:translateY(16px); transition:opacity .5s ease-out,transform .5s ease-out}
+  .rv.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1; transform:none; transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="lock">EverRise Lift Group <span class="x">×</span> Salesforce</div>
+    <button class="nav-toggle" id="navBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#fieldboss">FIELDBOSS</a>
+      <a href="#ladder">The question</a>
+      <a href="#pieces">The four pieces</a>
+      <a href="#not">What you don't need</a>
+      <a href="#context">Why now</a>
+      <a href="#questions">For your colleague</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="conf">Confidential · Prepared for EverRise Leadership · September 2026</div>
+    <h1>I asked how you're planning to harness that data. <span class="hl">This is the specific version of the question.</span></h1>
+    <p class="sub">On our call you said you're querying into a data lake with Claude, and I asked how you were planning
+      to harness it — which was a vague question, and you rightly asked what I meant. This is what I meant, written so
+      you can forward it rather than relay it. FIELDBOSS stays exactly where it is throughout.</p>
+
+    <div class="meta">
+      <div><span>Prepared for</span><b>Christopher J. Smith</b><br>Chief Executive Officer, EverRise Lift Group</div>
+      <div><span>Written to be forwarded</span><b>To whoever owns the data and the Claude work</b><br>Section six is addressed to them directly</div>
+      <div><span>From</span><b>Allison Harvey</b><br>Customer Partnerships, Salesforce</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>7</b><p>elevator companies now under EverRise</p><span class="src">EverRise "About" page</span></div>
+      <div class="stat"><b>5</b><p>joined since the H.I.G. investment in 2024</p><span class="src">EverRise company timeline</span></div>
+      <div class="stat"><b>5</b><p>still operating their own separate websites</p><span class="src">Links on EverRise's own site</span></div>
+      <div class="stat"><b>0</b><p>technology leaders on the published leadership page</p><span class="src">EverRise "Our Leadership"</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FIELDBOSS ============ -->
+<section id="fieldboss">
+  <div class="wrap narrow">
+    <p class="eyebrow">Before anything else</p>
+    <h2>This is not a proposal to replace FIELDBOSS.</h2>
+    <div class="bigstate">
+      <h3>FIELDBOSS stays the system of record for elevator service. Everything in this document sits above it or beside it.</h3>
+      <p>FIELDBOSS is built <strong>inside</strong> Dynamics 365 rather than bolted onto it. Work orders, safety tests,
+        equipment histories, violations and job costing live on the same records as your Business Central financials,
+        with elevator-specific logic on top of that. It is a decade of vertical engineering built for exactly your
+        trade, and re-implementing it would be a bad idea that cost you a year and bought you nothing.</p>
+      <p>You told me you're heavily embedded in it. That's the right place to be, and if anyone from my company
+        suggests otherwise, they haven't read your business.</p>
+    </div>
+    <p class="src" style="margin-top:18px">FIELDBOSS architecture per its own published product documentation. Everything
+      below concerns the layer above the systems of record, not the systems themselves.</p>
+  </div>
+</section>
+
+<!-- ============ THE LADDER ============ -->
+<section class="dark" id="ladder">
+  <div class="wrap">
+    <p class="eyebrow on-dark">What I actually meant</p>
+    <h2>There's a real difference between asking your data a question and having something act on the answer.</h2>
+    <p class="lede">Querying a lake with Claude is genuinely useful and puts you ahead of most of your peers. What it
+      doesn't give you is anything that carries the answer forward. Three stages — you're solidly at the first.</p>
+
+    <div class="ladder">
+      <div class="rung have">
+        <div class="n">✓</div>
+        <div>
+          <span class="lbl">You already have this</span>
+          <h4>Retrieve — ask the lake a question</h4>
+          <p>Claude reads the lake and answers. Fast, flexible, needs nobody's approval to try. This is the right
+            place to have started and I wouldn't change it.</p>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="n">2</div>
+        <div>
+          <span class="lbl">The part most people skip</span>
+          <h4>Reason — with governance attached</h4>
+          <p>The same question, except the model only sees what the person asking is allowed to see, and every answer
+            traces back to the records behind it.</p>
+          <p>Since August, Claude runs fully inside the Salesforce trust boundary, delivered through Amazon Bedrock —
+            the first model provider to do so. Not a different model from the one your team is using. The same one,
+            with an identity and permission layer around it.</p>
+        </div>
+      </div>
+      <div class="rung now">
+        <div class="n">3</div>
+        <div>
+          <span class="lbl">This is the gap</span>
+          <h4>Act — and write it back</h4>
+          <p>An agent that takes the answer and does something with it: assigns the overdue inspection, escalates it as
+            it ages, notifies the person who owns that jurisdiction, and writes the outcome back to the equipment
+            record.</p>
+          <p><strong>The write-back is the point.</strong> If the action doesn't land in FIELDBOSS, your system of
+            record is now wrong in a new way — which is worse than having no agent at all.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout onDark">
+      <p>Put plainly: "which units across seven brands are past their inspection window" is a question Claude can
+        already answer for you today. "That list is assigned to the right person, escalated when it ages, and written
+        back where an inspector can see it" is the part that doesn't exist yet. Whether that gap is worth closing now
+        is entirely your call — and it may well not be, four days after closing All City.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE FOUR PIECES ============ -->
+<section id="pieces">
+  <div class="wrap">
+    <p class="eyebrow">What we'd actually be</p>
+    <h2>Four pieces, none of them a pipeline.</h2>
+    <p class="lede">Each is a separate product. You would not need all four, and one of them you may already be paying
+      for without thinking of it as ours.</p>
+
+    <div class="grid g2">
+      <div class="card rv">
+        <span class="nm">Data Cloud · the data layer</span>
+        <h3>Not a database you migrate into</h3>
+        <p>It queries data where it already lives — Snowflake, Databricks, BigQuery, Redshift — without copying or
+          migrating it. Your lake stays your lake, in your account, in its own format, read through an open table
+          format rather than imported.</p>
+        <span class="at"><b>At EverRise</b>The lake you're building stays exactly where it is. What changes is that the
+          things asking it questions gain an identity, a permission model, and a record of what they asked. This is
+          the layer that turns "we query the lake" into something the business can rely on rather than something two
+          clever people do.</span>
+      </div>
+
+      <div class="card rv">
+        <span class="nm">MuleSoft · the integration layer</span>
+        <h3>APIs between systems that were never meant to talk</h3>
+        <p>It puts a stable API in front of systems that don't have one, and holds that contract steady when the system
+          behind it changes. Deliberately agnostic — it brokers Microsoft estates all day and has no opinion about
+          whether you use our CRM.</p>
+        <span class="at"><b>At EverRise</b>Seven companies, five of them arriving since 2024, each with its own stack.
+          Whatever consolidation you're doing, something has to broker between Dynamics, Business Central, the lake,
+          and whatever All City brought with it. That is this product's entire job.</span>
+      </div>
+
+      <div class="card rv">
+        <span class="nm">Agentforce · the action layer</span>
+        <h3>Agents that do things, not a chatbot</h3>
+        <p>An agent gets a defined job, the permissions to do it, a limited set of tools it may call, and an audit
+          trail of what it did. The distinction that matters: a chatbot answers, an agent acts and leaves a record.
+          Claude runs as a reasoning model inside it.</p>
+        <span class="at"><b>At EverRise</b>This is stage three from the section above. It's the only place where the
+          inspection example becomes real rather than illustrative — and it's the piece I'd want your colleague to
+          pressure-test hardest, because it depends entirely on what the lake actually contains.</span>
+      </div>
+
+      <div class="card rv">
+        <span class="nm">Slack · where it surfaces</span>
+        <h3>Yes, Slack is us</h3>
+        <p>We bought Slack in 2021. It matters here because an agent nobody sees is an agent nobody uses — an alert has
+          to arrive where someone already is, not in a portal they have to remember to open. Claude runs directly in
+          Slack too.</p>
+        <span class="at"><b>At EverRise</b>If your brands are already on Slack, you're already a customer of ours and
+          the surface for all of this exists today. If you're a Teams shop, that's fine and not a blocker — it just
+          changes what the first useful thing looks like. Worth me knowing which.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT YOU DON'T NEED ============ -->
+<section class="alt" id="not">
+  <div class="wrap narrow">
+    <p class="eyebrow">Ruling things out</p>
+    <h2>And the longer list of what you almost certainly don't need from us.</h2>
+    <p class="lede">I'd rather put this in writing than have someone discover later that I was quietly hoping to sell
+      it. This list is deliberately longer than the one above.</p>
+
+    <div class="ruleout">
+      <div class="ro"><div class="mk">✕</div><div><h4>Sales Cloud — the pipeline product</h4>
+        <p>When people say "Salesforce" this is what they picture: contacts, accounts, opportunity stages, a seat for
+          every salesperson. You're a service and maintenance business with recurring contracts. It's priced per seat
+          and it earns its keep in businesses whose primary motion is new-logo selling. That isn't you, and I'm not
+          leading with it.</p></div></div>
+      <div class="ro"><div class="mk">✕</div><div><h4>Our field service product</h4>
+        <p>We have one. FIELDBOSS is purpose-built for elevator contractors and ours is not. Yours is the better tool
+          for your trade, and that isn't a close call.</p></div></div>
+      <div class="ro"><div class="mk">✕</div><div><h4>Replacing your accounting or job costing</h4>
+        <p>Business Central does that and it sits on the same records as your service data. Moving it during a
+          seven-brand integration would be an unforced error.</p></div></div>
+      <div class="ro"><div class="mk">✕</div><div><h4>Marketing Cloud</h4>
+        <p>Nothing about a commercial elevator platform with named-account relationships suggests you need campaign
+          automation right now.</p></div></div>
+      <div class="ro"><div class="mk">✕</div><div><h4>A migration of any kind</h4>
+        <p>Nothing in this document requires you to move data, replatform a brand, or decommission a system. If a
+          proposal ever does, that's the moment to be suspicious of it.</p></div></div>
+    </div>
+
+    <div class="callout plain">
+      <p>Which leaves the data layer, the integration layer and the action layer — the three that have anything to do
+        with what you described. Three products out of a catalogue of dozens is, I hope, a more useful answer than a
+        platform pitch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY NOW / CONTEXT ============ -->
+<section id="context">
+  <div class="wrap">
+    <p class="eyebrow">Why this is sharper for you than for most</p>
+    <h2>Seven companies in fourteen years, five of them since 2024.</h2>
+    <p class="lede">This part I didn't have to ask you about, because EverRise publishes it. Your own history page lays
+      out the sequence; your own company pages show which brands still stand on their own.</p>
+
+    <div class="roster">
+      <div class="rrow head"><div>Company</div><div>Joined</div><div>Public web presence</div></div>
+      <div class="rrow"><div><b>Action Elevator Company</b><br><span class="src">Founded — Mid-Atlantic</span></div><div class="yr">2012</div><div class="st"><span class="pill own">Own website</span></div></div>
+      <div class="rrow"><div><b>Avery Elevator Corporation</b></div><div class="yr">2020</div><div class="st"><span class="pill fold">Folded into Action</span></div></div>
+      <div class="rrow"><div><b>Century Elevator</b><br><span class="src">Greater Washington, D.C.</span></div><div class="yr">2024</div><div class="st"><span class="pill fold">Folded into Action</span></div></div>
+      <div class="rrow"><div><b>Elevator Technologies (ETI)</b></div><div class="yr">2025</div><div class="st"><span class="pill own">Own website</span></div></div>
+      <div class="rrow"><div><b>GEN-L Elevator</b></div><div class="yr">2025</div><div class="st"><span class="pill own">Own website</span></div></div>
+      <div class="rrow"><div><b>Berlin Elevator Company</b></div><div class="yr">2025</div><div class="st"><span class="pill own">Own website</span></div></div>
+      <div class="rrow"><div><b>All City Elevator</b><br><span class="src">Minneapolis — Upper Midwest</span></div><div class="yr">2026</div><div class="st"><span class="pill own">Own website</span></div></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card rv">
+        <span class="tag ver">Published</span>
+        <h3>H.I.G. named technology explicitly</h3>
+        <p>The 14 September release commits to "investing further in technology, talent, and field operations" and to
+          continued add-on acquisitions. The mandate exists, in writing, and it was three days old when I first wrote
+          to you.</p>
+        <p class="src">H.I.G. Capital release, 14 September 2026</p>
+      </div>
+      <div class="card rv">
+        <span class="tag ver">Published</span>
+        <h3>Modernization is its own P&amp;L</h3>
+        <p>There's a President of Modernization &amp; Construction, H.I.G. named modernization capability as a use of
+          capital, and Action is hiring a Modernization Sales Representative right now. Modernization selling is
+          cross-brand by nature; service data is per-brand by history.</p>
+        <p class="src">EverRise leadership page; Action Elevator careers page</p>
+      </div>
+      <div class="card rv">
+        <span class="tag ver">Published</span>
+        <h3>Non-proprietary makes the data the asset</h3>
+        <p>Both companies lead with non-proprietary equipment, and H.I.G. calls it the model that gives owners "real
+          choice and control." If you're not locked to one manufacturer's parts, then equipment history per unit isn't
+          a byproduct of service — it's the thing you sell against.</p>
+        <p class="src">actionelevator.com; H.I.G. release</p>
+      </div>
+    </div>
+
+    <div style="margin-top:44px">
+      <p class="eyebrow muted">Published leadership team — ten named, with titles</p>
+      <div class="leaders">
+        <div class="leader"><b>Chris Smith</b> · CEO</div>
+        <div class="leader"><b>Paul Madden</b> · CFO</div>
+        <div class="leader"><b>John Marshall</b> · President, Mid-Atlantic</div>
+        <div class="leader"><b>Kristin Prudhomme</b> · President, Modernization &amp; Construction</div>
+        <div class="leader hi"><b>Doug Taylor</b> · Director of Integration</div>
+        <div class="leader"><b>Samuel Bonnie</b> · Director, Corp Dev &amp; Strategy</div>
+        <div class="leader"><b>Leslie Durakis</b> · Director, Sales &amp; Marketing</div>
+        <div class="leader"><b>Darren Brobbey</b> · Controller</div>
+        <div class="leader"><b>Tyler Goettl</b> · GM, All City Elevator</div>
+        <div class="leader"><b>Caleb Marshall</b> · Branch Manager</div>
+      </div>
+      <div class="absence rv">
+        <b>A Director of Integration, and no published CIO or CTO.</b>
+        <p style="margin:0; font-size:.94rem; color:var(--ink-2)">Not a criticism — plenty of well-run platforms this
+          size don't have one. But it suggests the architecture decisions for seven merged companies are being made
+          well and informally, by people who already have another job. Worth naming out loud before anyone — me
+          included — proposes anything to you.</p>
+      </div>
+    </div>
+
+    <div class="callout plain rv">
+      <h4>One small thing, offered gently</h4>
+      <p>Your About page says EverRise "brings together <strong>seven</strong> established elevator companies" in one
+        paragraph and "<strong>six</strong>" further down the same page. Both lists are there and they don't match.</p>
+      <p>It's a website, and websites lag — I raise it only because it's the cheapest possible version of the question
+        underneath all of this. If the brand count is hard to hold consistent on a page two people maintain, the
+        harder version is sitting right behind it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="alt" id="questions">
+  <div class="wrap narrow">
+    <div class="revbanner">
+      <p><b>This section is for the person Chris forwards this to.</b> Five questions I can't answer from the outside.
+        Two of them could rule this out entirely, and I'd genuinely rather they ruled it out now than three meetings
+        from now.</p>
+    </div>
+
+    <p class="eyebrow">For your colleague</p>
+    <h2>Five questions, and why each one changes the answer.</h2>
+
+    <div style="margin-top:38px">
+      <details class="q">
+        <summary>What is the lake actually built on?</summary>
+        <div class="body">
+          <span class="why">Why it decides things</span>
+          <p>Snowflake, Databricks, BigQuery, Redshift, Microsoft Fabric, or object storage with a catalog over it?</p>
+          <p>Snowflake, Databricks, BigQuery and Redshift are the established read-in-place paths — we query them
+            without copying. <strong>Microsoft Fabric is a joint Salesforce–Microsoft workstream rather than a settled
+            capability</strong>, and given FIELDBOSS sits inside Dynamics, Fabric would be a perfectly reasonable
+            choice for you to have made. If that's where you've built, I'd want to confirm exactly where that
+            integration stands today rather than tell you it works — and if it doesn't yet, I'd rather say so now.</p>
+        </div>
+      </details>
+      <details class="q">
+        <summary>Is FIELDBOSS operational data in the lake, or only the financials?</summary>
+        <div class="body">
+          <span class="why">Why it decides things</span>
+          <p>Work orders, safety tests, equipment histories and violations — or just what comes out of Business Central?</p>
+          <p>If the operational elevator data never reaches the lake, Claude is reasoning over financial outcomes
+            rather than field reality, and the interesting questions are unanswerable no matter what sits on top. This
+            is the single most important answer on this list.</p>
+        </div>
+      </details>
+      <details class="q">
+        <summary>One lake, or one per brand?</summary>
+        <div class="body">
+          <span class="why">Why it decides things</span>
+          <p>Did Century, ETI, Gen-L, Berlin, Avery and All City get consolidated into a single lake, or is each still
+            landing separately?</p>
+          <p>This is the difference between a reporting project and an integration project. If it's still several, the
+            sequencing matters far more than the tooling — and that's a conversation worth having entirely on its own,
+            with no product in it.</p>
+        </div>
+      </details>
+      <details class="q">
+        <summary>How are you calling Claude today?</summary>
+        <div class="body">
+          <span class="why">Why it decides things</span>
+          <p>Direct API, through Bedrock, the desktop app, or something your team built?</p>
+          <p>If you're already on Bedrock you're most of the way to running inside a governed boundary, and this is a
+            much smaller change than it sounds. If it's the desktop app, what you have today is one or two people
+            doing something clever rather than something the business can depend on — still valuable, different
+            starting point.</p>
+        </div>
+      </details>
+      <details class="q">
+        <summary>Who owns identity and permissions for lake access?</summary>
+        <div class="body">
+          <span class="why">Why it decides things</span>
+          <p>Is there a model for who can see which brand's data, or is lake access currently all-or-nothing?</p>
+          <p>This is the one that quietly kills these projects. Every governed-agent design assumes an answer, and two
+            years into a multi-brand integration there often isn't one yet. If there isn't, that's the actual first
+            project, and it has nothing to buy attached to it.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="callout plain">
+      <p style="margin:0">Deliberately absent from this page: pricing, projected savings, and any number about your
+        volumes. Some of what's described here is licensed software and some of it is work, and I'm not putting figures
+        in a document that gets forwarded. That's a conversation once we know whether any of this is even relevant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="cta">
+  <div class="wrap">
+    <p class="eyebrow on-dark">What I'm asking for</p>
+    <h2>Nothing on your calendar. Just pass this to your colleague.</h2>
+    <p class="lede">You said there's someone you'd be remiss not to include, and that you'd share this with them and
+      have them tell you whether it's worth a conversation. That's exactly the right process and I'm not going to try
+      to shortcut it by asking you for a slot.</p>
+    <p class="lede">So the ask is only this: let them read section six and answer the two questions they find easiest.
+      If their read is that the operational data isn't in the lake, or that identity and permissions aren't solved yet,
+      then there's nothing here for now — and I'd rather hear that than have a meeting about it.</p>
+
+    <div class="btns">
+      <a class="btn p" href="mailto:harvey.a@salesforce.com?subject=EverRise%20%E2%80%94%20passing%20this%20along">Reply with their read</a>
+      <a class="btn s" href="mailto:harvey.a@salesforce.com?subject=EverRise%20%E2%80%94%20corrections">Tell me what I've got wrong</a>
+    </div>
+
+    <div class="sig">
+      <b>Allison Harvey</b>
+      Customer Partnerships, Salesforce · harvey.a@salesforce.com · (317) 473-8098
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<div class="sources">
+  <div class="wrap">
+    <h4>Sources for the claims in this document</h4>
+    <ol>
+      <li>Company roster, acquisition timeline and leadership team with titles — <a href="https://everriseliftgroup.com/about/">everriseliftgroup.com/about</a></li>
+      <li>Which brands link to their own websites and which appear as logos only — <a href="https://everriseliftgroup.com/">everriseliftgroup.com</a></li>
+      <li>Formation of EverRise, H.I.G. backing, the technology and modernization investment commitments — H.I.G. Capital press release, 14 September 2026</li>
+      <li>Open roles including Modernization Sales Representative — <a href="https://actionelevator.com/about/careers/">actionelevator.com/about/careers</a></li>
+      <li>Non-proprietary equipment model and 24/7 emergency service — <a href="https://actionelevator.com/">actionelevator.com</a></li>
+      <li>FIELDBOSS built within Dynamics 365 — <a href="https://www.fieldboss.com/integrations/microsoft-dynamics-365/">fieldboss.com/integrations/microsoft-dynamics-365</a></li>
+      <li>Claude inside the Salesforce trust boundary via Amazon Bedrock, announced 26 August 2026 — <a href="https://www.salesforce.com/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/">salesforce.com newsroom</a></li>
+      <li>Zero-copy connectivity and currently supported platforms — <a href="https://www.salesforce.com/data/connectivity/zero-copy/">salesforce.com/data/connectivity/zero-copy</a></li>
+    </ol>
+    <p class="src" style="margin-top:20px; max-width:70ch">Everything about EverRise above comes from your own website
+      or H.I.G.'s public release, apart from what you told me directly on our call. If any of it is wrong or out of
+      date, I'd rather be corrected early than build on it.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      Confidential · Prepared for EverRise Lift Group leadership · September 2026<br>
+      Prepared by Allison Harvey, Salesforce. Any forward-looking architecture described here is illustrative and
+      subject to scoping and roadmap confirmation. Product capabilities are current as of the date above and platform
+      support for specific data sources changes over time. This page contains no pricing and constitutes no offer.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('navBtn');
+  var links = document.getElementById('navLinks');
+  if(btn && links){
+    btn.addEventListener('click', function(){
+      var open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.addEventListener('click', function(e){
+      if(e.target.tagName === 'A'){
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.rv');
+  if(reduce || !('IntersectionObserver' in window)){
+    for(var i=0;i<items.length;i++){ items[i].classList.add('in'); }
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+  for(var j=0;j<items.length;j++){ io.observe(items[j]); }
+})();
+</script>
+
+</body>
+</html>
